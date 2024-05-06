@@ -115,11 +115,12 @@
             </dependency>
 
             <!--aliyunOSS-->
-            <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>${aliyun.oss.version}</version>
-            </dependency>
+            <!--我使用的是spring-cloud-atarter-alicloud-oss，未使用此依赖和版本的skd，starter整合了sdk-->
+<!--            <dependency>-->
+<!--                <groupId>com.aliyun.oss</groupId>-->
+<!--                <artifactId>aliyun-sdk-oss</artifactId>-->
+<!--                <version>${aliyun.oss.version}</version>-->
+<!--            </dependency>-->
 
             <!--日期时间工具-->
             <dependency>
