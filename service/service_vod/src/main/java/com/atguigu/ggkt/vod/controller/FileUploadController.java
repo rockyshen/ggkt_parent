@@ -24,7 +24,7 @@ public class FileUploadController {
     @PostMapping("upload")
     public Result uploadFile(MultipartFile file) {
         String url = fileService.upload(file);
-        return Result.ok(url).message("上传文件成功");
+        return Result.ok(url).message("上传OSS对象存储成功");
     }
 
 }

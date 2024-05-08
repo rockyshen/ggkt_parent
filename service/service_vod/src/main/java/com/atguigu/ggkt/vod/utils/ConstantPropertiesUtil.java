@@ -7,16 +7,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConstantPropertiesUtil implements InitializingBean {
 
-    @Value("${alicloud.oss.endpoint}")
+//    @Value("${alicloud.oss.endpoint}")
+    @Value("${spring.cloud.alicloud.oss.endpoint}")
     private String endpoint;
 
-    @Value("${alicloud.oss.access-key}")
+//    @Value("${alicloud.oss.access-key}")
+    @Value("${spring.cloud.alicloud.access-key}")
     private String accessKey;
 
-    @Value("${alicloud.oss.secret-key}")
+//    @Value("${alicloud.oss.secret-key}")
+    @Value("${spring.cloud.alicloud.secret-key}")
     private String secretKey;
 
-    @Value("${alicloud.oss.bucket}")
+//    @Value("${alicloud.oss.bucket}")
+    @Value("${spring.cloud.alicloud.oss.bucket}")
     private String bucketName;
 
     public static String END_POINT;

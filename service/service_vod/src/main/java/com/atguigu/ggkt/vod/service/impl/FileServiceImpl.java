@@ -18,18 +18,12 @@ import java.util.UUID;
 
 @Service
 public class FileServiceImpl implements FileService {
-//    private String endpoint = "https://oss-cn-shanghai.aliyuncs.com";
-//    private String bucketName = "ggkt-rockyshen";
-//    private String accessKey = "LTAI5tGNmsHDpCCL81aDse4s";
-//    private String secretKey = "FETzGymAxTLrKWDRcMupPAKaeBCTFm";
-
     //文件上传
     @Override
     public String upload(MultipartFile file) {
         /*
-        OSS,签名直传服务
-        思考：下面示例代码，是服务器签名直传的示例代码；利用controller中的URL触发
-        硅谷课堂用的是上传文件到服务器，然后再提交给aliyun oss，实现代码步骤不同，不能参考
+        硅谷课堂用的是上传文件到服务器，然后再提交给aliyun oss
+        不同于谷粒商城的服务端签名直传
         */
 
         String endpoint = ConstantPropertiesUtil.END_POINT;

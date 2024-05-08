@@ -17,6 +17,9 @@ public class GlobalExceptionHandler {
     //2 特定异常处理，传入指定的Exception
 
     //3 自定义异常处理
-
-
+    @ExceptionHandler(GgktException.class)
+    public Result error(GgktException e) {
+        e.printStackTrace();
+        return Result.fail(null).code(e.getCode()).message(e.getMessage());
+    }
 }
