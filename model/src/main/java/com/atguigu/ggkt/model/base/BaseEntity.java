@@ -37,6 +37,8 @@ public class BaseEntity implements Serializable {
     @TableField("is_deleted")
     private Integer isDeleted;
 
+    // 此项不在表中，但是我们需要封装额外数据
+    // 例如通过teacher_id查到的teacherName
     @ApiModelProperty(value = "其他参数")
     @TableField(exist = false)
     private Map<String,Object> param = new HashMap<>();
