@@ -18,7 +18,7 @@ public class CourseDescription {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "id")
-	@TableId(type = IdType.INPUT)
+	@TableId(type = IdType.INPUT)  //id需要自己输入，可以让descriptionId和courseId相同；默认是雪花算法
 	private Long id;
 
 	@ApiModelProperty(value = "创建时间")

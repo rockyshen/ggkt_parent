@@ -1,16 +1,21 @@
 package com.atguigu.ggkt.vod.service.impl;
 
 import com.atguigu.ggkt.model.vod.Course;
+import com.atguigu.ggkt.model.vod.CourseDescription;
 import com.atguigu.ggkt.model.vod.Subject;
 import com.atguigu.ggkt.model.vod.Teacher;
+import com.atguigu.ggkt.vo.vod.CourseFormVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
+import com.atguigu.ggkt.vod.mapper.CourseDescriptionMapper;
 import com.atguigu.ggkt.vod.mapper.CourseMapper;
+import com.atguigu.ggkt.vod.service.CourseDescriptionService;
 import com.atguigu.ggkt.vod.service.CourseService;
 import com.atguigu.ggkt.vod.service.SubjectService;
 import com.atguigu.ggkt.vod.service.TeacherService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -38,6 +43,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private SubjectService subjectService;
+
+    @Autowired
+    private CourseDescriptionService courseDescriptionService;
 
     // 点播课程列表，条件查询+分页
     @Override
@@ -86,6 +94,61 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         map.put("totalPage",totalPage);
 
         return map;
+    }
+
+    // 添加课程信息 = 基本信息 + 描述信息
+    @Override
+    public Long saveCourseInfo(CourseFormVo courseFormVo) {
+        // 基本信息
+        Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo,course);
+        baseMapper.insert(course);
+
+        // 描述信息
+        CourseDescription description = new CourseDescription();
+        description.setDescription(courseFormVo.getDescription());
+
+        description.setId(courseFormVo.getId());  // 课程描述表的主键策略是Input,需要自己输入
+        description.setCourseId(courseFormVo.getId());  // 让课程描述表中id和course_id相同
+
+        courseDescriptionService.save(description);
+
+        return course.getId();
+    }
+
+    //根据Id获取课程信息
+    @Override
+    public CourseFormVo getCourseInfoById(Long id) {
+        Course course = baseMapper.selectById(id);
+        if (course == null) {
+            return null;
+        }
+        //基于course查询描述信息
+        CourseDescription courseDescription = courseDescriptionService.getById(course.getId());
+
+        //封装到CourseFormVo
+        CourseFormVo courseFormVo = new CourseFormVo();
+        BeanUtils.copyProperties(course,courseFormVo);
+        if(courseDescription != null){
+            courseFormVo.setDescription(courseDescription.getDescription());
+        }
+        return courseFormVo;
+    }
+
+    //修改课程信息
+    @Override
+    public void updateCourseId(CourseFormVo courseFormVo) {
+        //修改基本信息
+        Course course = new Course();
+        BeanUtils.copyProperties(courseFormVo,course);
+        baseMapper.updateById(course);
+
+        //修改课程描述信息
+        CourseDescription description = new CourseDescription();
+        description.setDescription(courseFormVo.getDescription());
+        courseDescriptionService.updateById(description);
+
+        //Todo 返回上一部修改时，课程描述没有回显，是空的！
     }
 
     private Course getNameById(Course course) {
