@@ -124,14 +124,16 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
             return null;
         }
         //基于course查询描述信息
-        CourseDescription courseDescription = courseDescriptionService.getById(course.getId());
+        CourseDescription courseDescription = courseDescriptionService.getById(id);
 
         //封装到CourseFormVo
         CourseFormVo courseFormVo = new CourseFormVo();
         BeanUtils.copyProperties(course,courseFormVo);
+
         if(courseDescription != null){
             courseFormVo.setDescription(courseDescription.getDescription());
         }
+        //Todo 返回上一部修改时，课程描述没有回显，是空的！
         return courseFormVo;
     }
 
@@ -147,8 +149,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription description = new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
         courseDescriptionService.updateById(description);
-
-        //Todo 返回上一部修改时，课程描述没有回显，是空的！
     }
 
     private Course getNameById(Course course) {

@@ -34,7 +34,7 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    //1 点播课程列表
+    //1 课程列表
     @ApiOperation("点播课程列表")
     @GetMapping("{current}/{limit}")
     public Result courseList(@PathVariable Long current,
@@ -69,6 +69,8 @@ public class CourseController {
         courseService.updateCourseId(courseFormVo);
         return Result.ok(null);
     }
+
+    //5
 
 }
 
