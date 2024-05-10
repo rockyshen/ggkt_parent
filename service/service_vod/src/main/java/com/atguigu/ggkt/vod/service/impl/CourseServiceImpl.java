@@ -5,6 +5,7 @@ import com.atguigu.ggkt.model.vod.CourseDescription;
 import com.atguigu.ggkt.model.vod.Subject;
 import com.atguigu.ggkt.model.vod.Teacher;
 import com.atguigu.ggkt.vo.vod.CourseFormVo;
+import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.mapper.CourseDescriptionMapper;
 import com.atguigu.ggkt.vod.mapper.CourseMapper;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,11 +110,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         CourseDescription description = new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
 
-        description.setId(courseFormVo.getId());  // 课程描述表的主键策略是Input,需要自己输入
-        description.setCourseId(courseFormVo.getId());  // 让课程描述表中id和course_id相同
-
+        /*返回上一部修改时，课程描述没有回显，是空的？
+        这里有个bug，老师讲的时，课程描述id和课程id相等，但是到我的数据库表中就不想等
+        问题出在下面的代码，设置id，应该用course.getId，而不是courseFormVo的id
+         */
+        description.setId(course.getId());  // 课程描述表的主键策略是Input,需要自己输入
+        description.setCourseId(course.getId());  // 让课程描述表中id和course_id相同
         courseDescriptionService.save(description);
-
         return course.getId();
     }
 
@@ -133,7 +137,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         if(courseDescription != null){
             courseFormVo.setDescription(courseDescription.getDescription());
         }
-        //Todo 返回上一部修改时，课程描述没有回显，是空的！
         return courseFormVo;
     }
 
@@ -148,7 +151,25 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         //修改课程描述信息
         CourseDescription description = new CourseDescription();
         description.setDescription(courseFormVo.getDescription());
+        //需要设置descripti_id，否则怎么updateById呢？
+        description.setId(course.getId());
         courseDescriptionService.updateById(description);
+    }
+
+    //根据id查询课程发布信息（包括：讲师、分类，用sql）
+    @Override
+    public CoursePublishVo getCoursePublishVo(Long id) {
+        CoursePublishVo coursePublishVo = baseMapper.selectCoursePublishVoById(id);
+        return coursePublishVo;
+    }
+
+    //课程最终发布，更新状态：status
+    @Override
+    public void publishCourse(Long id) {
+        Course course = baseMapper.selectById(id);
+        course.setStatus(1);  //0表示未发布，1表示已发布
+        course.setPublishTime(new Date());
+        baseMapper.updateById(course);
     }
 
     private Course getNameById(Course course) {

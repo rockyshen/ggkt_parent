@@ -2,6 +2,7 @@ package com.atguigu.ggkt.vod.service;
 
 import com.atguigu.ggkt.model.vod.Course;
 import com.atguigu.ggkt.vo.vod.CourseFormVo;
+import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -25,4 +26,8 @@ public interface CourseService extends IService<Course> {
     CourseFormVo getCourseInfoById(Long id);
 
     void updateCourseId(CourseFormVo courseFormVo);
+
+    CoursePublishVo getCoursePublishVo(Long id);
+
+    void publishCourse(Long id);
 }
