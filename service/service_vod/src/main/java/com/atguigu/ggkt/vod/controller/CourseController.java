@@ -88,5 +88,13 @@ public class CourseController {
         return Result.ok(null);
     }
 
+    //7 删除课程
+    @ApiOperation("删除课程")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        courseService.removeCourseId(id);
+        return Result.ok(null);
+    }
+
 }
 

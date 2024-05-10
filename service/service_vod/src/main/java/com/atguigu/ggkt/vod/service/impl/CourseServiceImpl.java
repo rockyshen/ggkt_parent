@@ -9,10 +9,7 @@ import com.atguigu.ggkt.vo.vod.CoursePublishVo;
 import com.atguigu.ggkt.vo.vod.CourseQueryVo;
 import com.atguigu.ggkt.vod.mapper.CourseDescriptionMapper;
 import com.atguigu.ggkt.vod.mapper.CourseMapper;
-import com.atguigu.ggkt.vod.service.CourseDescriptionService;
-import com.atguigu.ggkt.vod.service.CourseService;
-import com.atguigu.ggkt.vod.service.SubjectService;
-import com.atguigu.ggkt.vod.service.TeacherService;
+import com.atguigu.ggkt.vod.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -48,6 +45,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
 
     @Autowired
     private CourseDescriptionService courseDescriptionService;
+
+    @Autowired
+    private VideoService videoService;
+
+    @Autowired
+    private ChapterService chapterService;
+
 
     // 点播课程列表，条件查询+分页
     @Override
@@ -170,6 +174,22 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         course.setStatus(1);  //0表示未发布，1表示已发布
         course.setPublishTime(new Date());
         baseMapper.updateById(course);
+    }
+
+    // 删除课程
+    @Override
+    public void removeCourseId(Long id) {
+
+        //Todo 涉及删除多表的情况，要加事务啊！
+
+        // 根据课程id,删除小节表  获取video对象
+        videoService.removeVideoByCourseId(id);
+        // 根据课程id,删除章节
+        chapterService.removeChapterByCourseId(id);
+        // 根据课程id,删除描述
+        courseDescriptionService.removeById(id);   //课程描述id 等于 课程id（注意：前面的不是，从26号 redis开始修复了bug
+        // 根据课程id,删除课程基本信息
+        baseMapper.deleteById(id);
     }
 
     private Course getNameById(Course course) {
