@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.atguigu</groupId>
-        <artifactId>ggkt_parent</artifactId>
+        <artifactId>service</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>service_order</artifactId>
@@ -61,6 +60,9 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.3.1</version>
         </dependency>
+
+
+
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>

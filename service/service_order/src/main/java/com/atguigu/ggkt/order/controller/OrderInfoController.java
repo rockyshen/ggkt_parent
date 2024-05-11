@@ -7,6 +7,7 @@ import com.atguigu.ggkt.result.Result;
 import com.atguigu.ggkt.vo.order.OrderInfoQueryVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +29,15 @@ public class OrderInfoController {
     @Autowired
     private OrderInfoService orderInfoService;
 
+    @ApiOperation("订单管理列表")
     @GetMapping("{page}/{limit}")
     public Result listOrder(@PathVariable Long page,
                             @PathVariable Long limit,
-                            @RequestBody OrderInfoQueryVo orderInfoQueryVo) {
+                            OrderInfoQueryVo orderInfoQueryVo) {
 
         Page<OrderInfo> pageParam = new Page<>(page,limit);
         Map<String, Object> map = orderInfoService.selectOrderInfoPage(pageParam,orderInfoQueryVo);
-        return null;
+        return Result.ok(map);
     }
 }
 
