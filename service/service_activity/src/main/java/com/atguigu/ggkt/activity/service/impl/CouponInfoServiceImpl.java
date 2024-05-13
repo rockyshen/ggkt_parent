@@ -17,6 +17,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * <p>
  * 优惠券信息 服务实现类
@@ -68,6 +70,17 @@ public class CouponInfoServiceImpl extends ServiceImpl<CouponInfoMapper, CouponI
         });
 
         return pageModel;
+    }
+
+    //api-微信公众号，更新优惠劵使用情况
+    @Override
+    public void updateCouponInfoUseStatus(Long couponUseId, Long orderId) {
+        CouponUse couponUse = new CouponUse();
+        couponUse.setId(couponUseId);
+        couponUse.setOrderId(orderId);
+        couponUse.setCouponStatus("1");  //已使用
+        couponUse.setUsingTime(new Date());
+        couponUseService.updateById(couponUse);
     }
 
     // 通过远程调用，根据id获取用户信息

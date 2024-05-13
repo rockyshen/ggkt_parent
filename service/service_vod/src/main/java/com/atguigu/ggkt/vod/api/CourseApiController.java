@@ -29,4 +29,16 @@ public class CourseApiController {
         List<Course> courseList = courseService.list(wrapper);
         return courseList;
     }
+
+    //根据课程ID，查询课程信息
+    /*
+    注意：service_vod模块的controller里面也有相同方法，但是注意，是提供给后台管理系统的。
+    两者有差异！此处方法是对接微信公众号！所以放在api下！
+     */
+    @ApiOperation("根据ID查询课程")
+    @GetMapping("inner/getById/{courseId}")
+    public Course getById(@PathVariable Long courseId) {
+        Course course = courseService.getById(courseId);
+        return course;
+    }
 }
