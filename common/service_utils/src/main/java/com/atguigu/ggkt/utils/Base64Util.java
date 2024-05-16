@@ -33,7 +33,7 @@ public class Base64Util {
     }
 
     public static void main(String[] args) {
-        System.out.println(com.atguigu.ggkt.common.utils.UrlUtil.getParam("http://glkt.atguigu.cn/#/liveInfo/7?recommend=MQ==", "recommend"));
+        System.out.println(com.atguigu.ggkt.utils.UrlUtil.getParam("http://glkt.atguigu.cn/#/liveInfo/7?recommend=MQ==", "recommend"));
         System.out.println(Base64Util.base64Encode("q2"));
         System.out.println(Base64Util.base64Decode("MQ=="));
     }

@@ -38,9 +38,11 @@ public class SubjectServiceImpl extends ServiceImpl<SubjectMapper, Subject> impl
 
     @Override
     public List<Subject> selectSubjectList(Long id) {
+        // 查询id分类下的全部数据
         QueryWrapper<Subject> wrapper = new QueryWrapper<>();
         wrapper.eq("parent_id",id);
         List<Subject> subjectList = baseMapper.selectList(wrapper);
+
         //遍历list，如果有下一层对象，把has_child值改为true
         for(Subject subject:subjectList){
             Long subjectId = subject.getId();

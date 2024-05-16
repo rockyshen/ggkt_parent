@@ -16,6 +16,5 @@
                  left outer join subject s1 on c.subject_parent_id = s1.id
                  left outer join subject s2 on c.subject_id=s2.id
         where c.id=#{id}
-
     </select>
 </mapper>

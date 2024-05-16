@@ -1,19 +1,16 @@
 package com.atguigu.ggkt.result;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // 统一返回结果类
 @Data
+@NoArgsConstructor
 public class Result<T> {
     private Integer code;  //状态码
-
     private String message;  //状态信息
-
     private T data;    //返回数据
 
-    public Result() {}
-
-    // 成功的方法，判断是否有data数据
     public static<T> Result<T> ok(T data) {
         Result<T> result = new Result<>();
         if(data != null){
@@ -44,5 +41,4 @@ public class Result<T> {
         this.setCode(code);
         return this;
     }
-
 }

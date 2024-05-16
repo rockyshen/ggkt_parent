@@ -81,7 +81,7 @@ public class ChapterServiceImpl extends ServiceImpl<ChapterMapper, Chapter> impl
                     BeanUtils.copyProperties(video,videoVo);
                     videoVoList.add(videoVo);
                 }
-            chapterVo.setChildren(videoVoList);
+                chapterVo.setChildren(videoVoList);
             });
         });
         return finalChapterList;

@@ -14,5 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface CourseMapper extends BaseMapper<Course> {
 
-    CoursePublishVo selectCoursePublishVoById(Long id);
+    CoursePublishVo selectCoursePublishVoById(Long id);  //传递给xml时，如果有多值的话，要用@Param注解指定
 }

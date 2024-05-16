@@ -24,9 +24,9 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
     private void initUserLoginVo(HttpServletRequest request){
         String userId = request.getHeader("userId");
         if (StringUtils.isEmpty(userId)) {
-            com.atguigu.ggkt.common.utils.AuthContextHolder.setAdminId(1L);
+            com.atguigu.ggkt.utils.AuthContextHolder.setAdminId(1L);
         } else {
-            com.atguigu.ggkt.common.utils.AuthContextHolder.setAdminId(Long.parseLong(userId));
+            com.atguigu.ggkt.utils.AuthContextHolder.setAdminId(Long.parseLong(userId));
         }
     }
 

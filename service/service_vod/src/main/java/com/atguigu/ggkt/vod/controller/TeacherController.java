@@ -90,7 +90,8 @@ public class TeacherController {
             if(!StringUtils.isEmpty(joinDateEnd)){
                 wrapper.le("join_date",joinDateEnd);
             }
-
+            // service层的分页方法，page(pageParam, wrapper)
+            // mapper层的分页方法，selectPage(pageParam, wrapper)
             IPage<Teacher> pageModel = teacherService.page(pageParam,wrapper);
 
             return Result.ok(pageModel);

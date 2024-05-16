@@ -40,6 +40,7 @@ public class CourseController {
     @GetMapping("{current}/{limit}")
     public Result courseList(@PathVariable Long current,
                              @PathVariable Long limit,
+                             // 实体类接值，不用加任何注解，url中param名=Field名，就能接到值
                              CourseQueryVo courseQueryVo) {
         Page<Course> pageParam = new Page<>(current,limit);
         // 当不确定返回值类型时，选Map,取值放值都方便

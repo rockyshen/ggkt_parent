@@ -18,6 +18,9 @@ import java.util.List;
  */
 public interface VideoVisitorMapper extends BaseMapper<VideoVisitor> {
 
+    // 统计在开始时间-完成时间范围内，观看人数
+    // startDate 和 endDate可能是null,利用<where> + <if test=""> 来拼接
+
     List<VideoVisitorCountVo> findCount(@Param("courseId")Long courseId,
                                         @Param("startDate") String startDate,
                                         @Param("endDate") String endDate);

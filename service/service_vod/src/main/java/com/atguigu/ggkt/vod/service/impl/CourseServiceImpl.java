@@ -82,6 +82,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
         }
 
         Page<Course> pageModel = courseMapper.selectPage(pageParam, wrapper);
+        //最好用Ipage<Course>
 
         long totalCount = pageModel.getTotal();
         long totalPage = pageModel.getPages();
